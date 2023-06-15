@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\BelanjaController;
+use App\Http\Controllers\JualController;
+use App\Http\Controllers\ProduksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +17,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard', [
+        'title' => 'dashboard'
+    ]);
 });
+
+Route::get('/shopping', [BelanjaController::class, 'show']);
+
+Route::get('/production', [ProduksiController::class, 'show']);
+
+Route::get('/selling', [JualController::class, 'show']);

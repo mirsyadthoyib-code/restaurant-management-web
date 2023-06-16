@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\jual;
+use NumberFormatter;
 use Illuminate\Http\Request;
 
 class JualController extends Controller
@@ -47,15 +48,20 @@ class JualController extends Controller
     public function show(jual $jual)
     {
         //
-        $data = $jual->all();
+        $data = $jual->getJualMenuList();
         $total_qty = 0;
         $total_lo = 0;
         $total = 0;
+        
         foreach ($data as $item) {
             $total_qty += $item->kuantitas;
             $total_lo += $item->sisa;
             $total += ($item->kuantitas - $item->sisa) * $item->harga_jual;
         }
+
+        $fmt = numfmt_create( 'in_ID', NumberFormatter::CURRENCY );
+        $total = numfmt_format_currency($fmt, $total, "IDR")."\n";
+
         return view('selling.list', [
             'title' => 'selling',
             'data' => $data,

@@ -33,8 +33,8 @@
                                         @foreach ($data as $key => $item)
                                             <tr>
                                                 <th scope="row"><?= $key + 1 ?></th>
-                                                <td><?= $item->id_menu ?></td>
-                                                <td><?= $item->kuantitas ?></td>
+                                                <td><?= ucfirst($item->nama_menu) ?></td>
+                                                <td><?= $item->kuantitas.' pcs' ?></td>
                                                 <td><?= $item->harga_modal ?></td>
                                                 <th scope="row"></th>
                                             </tr>
@@ -44,7 +44,7 @@
                                         <tr>
                                             <th scope="col"></th>
                                             <th>Total</th>
-                                            <th><?= $total_qty ?></th>
+                                            <th><?= $total_qty.' pcs' ?></th>
                                             <th><?= $total ?></th>
                                             <th scope="col"></th>
                                         </tr>

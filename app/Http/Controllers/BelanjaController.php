@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use NumberFormatter;
 use App\Models\belanja;
 use Illuminate\Http\Request;
 
@@ -49,11 +50,16 @@ class BelanjaController extends Controller
     public function show(belanja $belanja)
     {
         //
-        $data = $belanja->all();
+        $data = $belanja->getBelanjaBahanList();
         $total = 0;
+
         foreach ($data as $item) {
             $total += $item->kuantitas * $item->harga;
         }
+
+        $fmt = numfmt_create( 'in_ID', NumberFormatter::CURRENCY );
+        $total = numfmt_format_currency($fmt, $total, "IDR")."\n";
+        
         return view('shopping.list', [
             'title' => 'shopping',
             'data' => $data,

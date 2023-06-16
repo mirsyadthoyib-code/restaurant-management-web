@@ -32,9 +32,9 @@
                                         @foreach ($data as $key => $item)
                                             <tr>
                                                 <th scope="row"><?= $key + 1 ?></th>
-                                                <td><?= $item->id_menu ?></td>
-                                                <td><?= $item->kuantitas ?></td>
-                                                <td><?= $item->sisa ?></td>
+                                                <td><?= ucfirst($item->nama_menu) ?></td>
+                                                <td><?= $item->kuantitas.' pcs' ?></td>
+                                                <td><?= $item->sisa.' pcs' ?></td>
                                                 <td><?= $item->harga_jual ?></td>
                                             </tr>
                                         @endforeach
@@ -43,8 +43,8 @@
                                         <tr>
                                             <th scope="col"></th>
                                             <th>Total</th>
-                                            <th><?= $total_qty ?></th>
-                                            <th><?= $total_lo ?></th>
+                                            <th><?= $total_qty.' pcs' ?></th>
+                                            <th><?= $total_lo.' pcs' ?></th>
                                             <th><?= $total ?></th>
                                         </tr>
                                     </tfoot>

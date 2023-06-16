@@ -32,8 +32,8 @@
                                         @foreach ($data as $key => $item)
                                             <tr>
                                                 <th scope="row"><?= $key + 1 ?></th>
-                                                <td><?= $item->id_bahan ?></td>
-                                                <td><?= $item->kuantitas ?></td>
+                                                <td><?= ucfirst($item->nama_bahan) ?></td>
+                                                <td><?= $item->kuantitas.' '.$item->satuan ?></td>
                                                 <td><?= $item->harga ?></td>
                                                 <th scope="row"></th>
                                             </tr>

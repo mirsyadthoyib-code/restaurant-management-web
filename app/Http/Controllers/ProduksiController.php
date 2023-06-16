@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use NumberFormatter;
 use App\Models\produksi;
 use Illuminate\Http\Request;
 
@@ -47,13 +48,15 @@ class ProduksiController extends Controller
     public function show(produksi $produksi)
     {
         //
-        $data = $produksi->all();
+        $data = $produksi->getProduksiMenuList();
         $total_qty = 0;
         $total = 0;
         foreach ($data as $item) {
             $total_qty += $item->kuantitas;
             $total += $item->kuantitas * $item->harga_modal;
         }
+        $fmt = numfmt_create( 'in_ID', NumberFormatter::CURRENCY );
+        $total = numfmt_format_currency($fmt, $total, "IDR")."\n";
         return view('production.list', [
             'title' => 'production',
             'data' => $data,

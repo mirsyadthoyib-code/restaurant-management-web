@@ -17,9 +17,13 @@ use App\Http\Controllers\ProduksiController;
 |
 */
 
+// Authentication Page
+Route::get('/login', [UserController::class, 'index'])->name('login');;
+
 // Dashboard
 Route::post('/', [UserController::class, 'login']);
 Route::get('/', function () {
+    // check login
     if(!session('user')->nama_akun) {
         return redirect()->route('login');
     }
@@ -33,5 +37,9 @@ Route::get('/shopping', [BelanjaController::class, 'show']);
 Route::get('/production', [ProduksiController::class, 'show']);
 Route::get('/selling', [JualController::class, 'show']);
 
-// Authentication Page
-Route::get('/login', [UserController::class, 'index'])->name('login');;
+// Create page
+Route::get('/shopping/add', [BelanjaController::class, 'create']);
+Route::get('/production/add', [ProduksiController::class, 'create']);
+Route::get('/selling/add', [JualController::class, 'create']);
+
+

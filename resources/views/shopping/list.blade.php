@@ -12,7 +12,7 @@
                                     <h4 class="card-title">Shopping</h4>
                                 </div>
                                 <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="/shopping/create" role="button" class="btn btn-primary">Add Shopping Data</a>
+                                    <a href="/shopping/add" role="button" class="btn btn-primary">Add Shopping Data</a>
                                 </div>
                             </div>
                         </div>

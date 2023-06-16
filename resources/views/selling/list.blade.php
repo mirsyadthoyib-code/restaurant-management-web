@@ -12,7 +12,7 @@
                                     <h4 class="card-title">Selling</h4>
                                 </div>
                                 <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="/shopping/add" role="button" class="btn btn-primary">Add Selling Data</a>
+                                    <a href="<?= url('/selling/add') ?>" role="button" class="btn btn-primary">Add Selling Data</a>
                                 </div>
                             </div>
                         </div>

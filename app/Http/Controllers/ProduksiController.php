@@ -26,6 +26,9 @@ class ProduksiController extends Controller
     public function create()
     {
         //
+        return view('production.form', [
+            'title' => 'production'
+        ]);
     }
 
     /**
@@ -42,10 +45,10 @@ class ProduksiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\produksi  $produksi
+     * @param  \App\Models\Produksi  $produksi
      * @return \Illuminate\Http\Response
      */
-    public function show(produksi $produksi)
+    public function show(Produksi $produksi)
     {
         //
         $data = $produksi->getProduksiMenuList();
@@ -68,10 +71,10 @@ class ProduksiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\produksi  $produksi
+     * @param  \App\Models\Produksi  $produksi
      * @return \Illuminate\Http\Response
      */
-    public function edit(produksi $produksi)
+    public function edit(Produksi $produksi)
     {
         //
     }
@@ -80,10 +83,10 @@ class ProduksiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\produksi  $produksi
+     * @param  \App\Models\Produksi  $produksi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, produksi $produksi)
+    public function update(Request $request, Produksi $produksi)
     {
         //
     }
@@ -91,10 +94,10 @@ class ProduksiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\produksi  $produksi
+     * @param  \App\Models\Produksi  $produksi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(produksi $produksi)
+    public function destroy(Produksi $produksi)
     {
         //
     }

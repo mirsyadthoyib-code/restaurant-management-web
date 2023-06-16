@@ -26,6 +26,9 @@ class JualController extends Controller
     public function create()
     {
         //
+        return view('selling.form', [
+            'title' => 'selling'
+        ]);
     }
 
     /**
@@ -42,23 +45,30 @@ class JualController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\jual  $jual
+     * @param  \App\Models\Jual  $jual
      * @return \Illuminate\Http\Response
      */
-    public function show(jual $jual)
+    public function show(Jual $jual)
     {
-        //
+        // check selling session
+        if(!session('selling')) {
+            
+        }
+
+        // get jual menu data
         $data = $jual->getJualMenuList();
         $total_qty = 0;
         $total_lo = 0;
         $total = 0;
         
+        // calculate total qty, lo and selling
         foreach ($data as $item) {
             $total_qty += $item->kuantitas;
             $total_lo += $item->sisa;
             $total += ($item->kuantitas - $item->sisa) * $item->harga_jual;
         }
 
+        // currency formatter
         $fmt = numfmt_create( 'in_ID', NumberFormatter::CURRENCY );
         $total = numfmt_format_currency($fmt, $total, "IDR")."\n";
 
@@ -74,10 +84,10 @@ class JualController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\jual  $jual
+     * @param  \App\Models\Jual  $jual
      * @return \Illuminate\Http\Response
      */
-    public function edit(jual $jual)
+    public function edit(Jual $jual)
     {
         //
     }
@@ -86,10 +96,10 @@ class JualController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\jual  $jual
+     * @param  \App\Models\Jual  $jual
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, jual $jual)
+    public function update(Request $request, Jual $jual)
     {
         //
     }
@@ -97,10 +107,10 @@ class JualController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\jual  $jual
+     * @param  \App\Models\Jual  $jual
      * @return \Illuminate\Http\Response
      */
-    public function destroy(jual $jual)
+    public function destroy(Jual $jual)
     {
         //
     }

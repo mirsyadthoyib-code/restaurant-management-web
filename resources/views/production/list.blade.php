@@ -12,7 +12,7 @@
                                     <h4 class="card-title">Production</h4>
                                 </div>
                                 <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="/shopping/create" role="button" class="btn btn-primary">Add Production
+                                    <a href="/production/add" role="button" class="btn btn-primary">Add Production
                                         Data</a>
                                 </div>
                             </div>

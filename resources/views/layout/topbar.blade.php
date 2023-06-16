@@ -3,8 +3,8 @@
         <nav class="navbar navbar-expand-lg navbar-light p-0">
             <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
                 <i class="ri-menu-line wrapper-menu"></i>
-                <a href="../backend/index.html" class="header-logo">
-                    <h4 class="logo-title text-uppercase">Webkit</h4>
+                <a href="/" class="header-logo">
+                    <h4 class="logo-title text-uppercase">Kitchen</h4>
 
                 </a>
             </div>

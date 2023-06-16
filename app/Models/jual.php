@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Jual extends Model
 {
     use HasFactory;
-    protected $table = 'jual_menu';
 
     public function getJualMenuList()
     {
@@ -19,6 +18,27 @@ class Jual extends Model
             ->join('menu', 'jual_menu.id_menu', '=', 'menu.id_menu')
             ->get();
 
+        return $data;
+    }
+
+    public function addJual()
+    {
+
+        DB::table('jual')->insert([
+            'id_akun' => session('user')->id_akun
+        ]);
+    }
+
+    public function checkJualToday()
+    {
+        $data = DB::table('jual')
+            ->select('nama_akun', 'nama_gambar', 'role')
+            ->where('is_active', '=', 1)
+            ->get();
+        
+        if (count($data) == 0) {
+            return false;
+        }
         return $data;
     }
 }

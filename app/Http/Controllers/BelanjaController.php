@@ -28,6 +28,9 @@ class BelanjaController extends Controller
     public function create()
     {
         //
+        return view('shopping.form', [
+            'title' => 'shopping'
+        ]);
     }
 
     /**
@@ -44,10 +47,10 @@ class BelanjaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\belanja  $belanja
+     * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function show(belanja $belanja)
+    public function show(Belanja $belanja)
     {
         //
         $data = $belanja->getBelanjaBahanList();
@@ -70,10 +73,10 @@ class BelanjaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\belanja  $belanja
+     * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function edit(belanja $belanja)
+    public function edit(Belanja $belanja)
     {
         //
     }
@@ -82,10 +85,10 @@ class BelanjaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\belanja  $belanja
+     * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, belanja $belanja)
+    public function update(Request $request, Belanja $belanja)
     {
         //
     }
@@ -93,10 +96,10 @@ class BelanjaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\belanja  $belanja
+     * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function destroy(belanja $belanja)
+    public function destroy(Belanja $belanja)
     {
         //
     }

@@ -8,12 +8,12 @@
                 <div class="card card-block card-stretch card-height">
                     <div class="card-body">
                         <div class="top-block d-flex align-items-center justify-content-between">
-                            <h5>Investment</h5>
-                            <span class="badge badge-primary">Monthly</span>
+                            <h5>Cash</h5>
+                            <span class="badge badge-primary">Yearly</span>
                         </div>
-                        <h3>$<span class="counter">35000</span></h3>
+                        <h3>Rp<span class="counter">17,000,000</span></h3>
                         <div class="d-flex align-items-center justify-content-between mt-1">
-                            <p class="mb-0">Total Revenue</p>
+                            <p class="mb-0">Total Cash</p>
                             <span class="text-primary">65%</span>
                         </div>
                         <div class="iq-progress-bar bg-primary-light mt-2">
@@ -27,9 +27,9 @@
                     <div class="card-body">
                         <div class="top-block d-flex align-items-center justify-content-between">
                             <h5>Sales</h5>
-                            <span class="badge badge-warning">Anual</span>
+                            <span class="badge badge-warning">Monthly</span>
                         </div>
-                        <h3>$<span class="counter">25100</span></h3>
+                        <h3>Rp<span class="counter">25,000,000</span></h3>
                         <div class="d-flex align-items-center justify-content-between mt-1">
                             <p class="mb-0">Total Revenue</p>
                             <span class="text-warning">35%</span>
@@ -45,11 +45,11 @@
                     <div class="card-body">
                         <div class="top-block d-flex align-items-center justify-content-between">
                             <h5>Cost</h5>
-                            <span class="badge badge-success">Today</span>
+                            <span class="badge badge-success">Monthly</span>
                         </div>
-                        <h3>$<span class="counter">33000</span></h3>
+                        <h3>Rp<span class="counter">20,000,000</span></h3>
                         <div class="d-flex align-items-center justify-content-between mt-1">
-                            <p class="mb-0">Total Revenue</p>
+                            <p class="mb-0">Total Expenses</p>
                             <span class="text-success">85%</span>
                         </div>
                         <div class="iq-progress-bar bg-success-light mt-2">
@@ -63,11 +63,11 @@
                     <div class="card-body">
                         <div class="top-block d-flex align-items-center justify-content-between">
                             <h5>Profit</h5>
-                            <span class="badge badge-info">Weekly</span>
+                            <span class="badge badge-info">Monthly</span>
                         </div>
-                        <h3>$<span class="counter">2500</span></h3>
+                        <h3>Rp<span class="counter">5,000,000</span></h3>
                         <div class="d-flex align-items-center justify-content-between mt-1">
-                            <p class="mb-0">Total Revenue</p>
+                            <p class="mb-0">Total Profit</p>
                             <span class="text-info">55%</span>
                         </div>
                         <div class="iq-progress-bar bg-info-light mt-2">

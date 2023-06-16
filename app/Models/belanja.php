@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class belanja extends Model
+class Belanja extends Model
 {
     use HasFactory;
     protected $table = 'belanja_bahan';

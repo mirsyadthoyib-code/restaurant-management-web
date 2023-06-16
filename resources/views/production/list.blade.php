@@ -26,17 +26,17 @@
                                             <th scope="col">Menu</th>
                                             <th scope="col">Qty</th>
                                             <th scope="col">Cogs</th>
-                                            <th scope="col"></th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($data as $key => $item)
                                             <tr>
                                                 <th scope="row"><?= $key + 1 ?></th>
-                                                <td><?= ucfirst($item->nama_menu) ?></td>
+                                                <td><?= ucwords($item->nama_menu) ?></td>
                                                 <td><?= $item->kuantitas.' pcs' ?></td>
                                                 <td><?= $item->harga_modal ?></td>
-                                                <th scope="row"></th>
+                                                <td></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -59,5 +59,4 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script src="<?= url('js/getTableData/belanja_list.js') ?>"></script>
 @endSection

@@ -1,6 +1,6 @@
 <div class="iq-sidebar  sidebar-default ">
     <div class="iq-sidebar-logo d-flex align-items-center">
-        <a href="../backend/index.html" class="header-logo">
+        <a href="/" class="header-logo">
             <img src="<?= url('images/logo.png') ?>" alt="logo">
             <h3 class="logo-title light-logo">Kitchen</h3>
         </a>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use NumberFormatter;
-use App\Models\belanja;
+use App\Models\Belanja;
 use Illuminate\Http\Request;
 
 class BelanjaController extends Controller

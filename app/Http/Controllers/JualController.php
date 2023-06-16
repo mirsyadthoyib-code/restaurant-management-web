@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\jual;
+use App\Models\Jual;
 use NumberFormatter;
 use Illuminate\Http\Request;
 

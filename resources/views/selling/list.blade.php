@@ -12,7 +12,7 @@
                                     <h4 class="card-title">Selling</h4>
                                 </div>
                                 <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="/shopping/create" role="button" class="btn btn-primary">Add Selling Data</a>
+                                    <a href="/shopping/add" role="button" class="btn btn-primary">Add Selling Data</a>
                                 </div>
                             </div>
                         </div>
@@ -26,16 +26,18 @@
                                             <th scope="col">Qty</th>
                                             <th scope="col">Leftover</th>
                                             <th scope="col">Price</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($data as $key => $item)
                                             <tr>
                                                 <th scope="row"><?= $key + 1 ?></th>
-                                                <td><?= ucfirst($item->nama_menu) ?></td>
+                                                <td><?= ucwords($item->nama_menu) ?></td>
                                                 <td><?= $item->kuantitas.' pcs' ?></td>
                                                 <td><?= $item->sisa.' pcs' ?></td>
                                                 <td><?= $item->harga_jual ?></td>
+                                                <td></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -46,6 +48,7 @@
                                             <th><?= $total_qty.' pcs' ?></th>
                                             <th><?= $total_lo.' pcs' ?></th>
                                             <th><?= $total ?></th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -58,5 +61,4 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script src="<?= url('js/getTableData/belanja_list.js') ?>"></script>
 @endSection

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use NumberFormatter;
-use App\Models\produksi;
+use App\Models\Produksi;
 use Illuminate\Http\Request;
 
 class ProduksiController extends Controller

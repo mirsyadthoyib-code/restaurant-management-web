@@ -17,6 +17,11 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                            @endif
                             <div class="table-responsive rounded bg-white">
                                 <table class="table mb-0 table-borderless tbl-server-info">
                                     <thead>
@@ -33,9 +38,9 @@
                                             <tr>
                                                 <th scope="row"><?= $key + 1 ?></th>
                                                 <td><?= ucwords($item->nama_bahan) ?></td>
-                                                <td><?= $item->kuantitas.' '.$item->satuan ?></td>
+                                                <td><?= $item->kuantitas . ' ' . $item->satuan ?></td>
                                                 <td><?= $item->harga ?></td>
-                                                <td></td>
+                                                <td><?= $item->action ?></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -12,14 +12,14 @@
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
                 <li class="<?= ($title == 'dashboard') ? 'active' : '' ?>">
-                    <a href="/" class="svg-icon">
+                    <a href="/dashboard" class="svg-icon">
                         <i class="ri-dashboard-line" style="font-size: 1.6em"></i>
                         <span class="ml-4">Dashboards</span>
                     </a>
                 </li>
                 <li class="<?= ($title == 'shopping') ? 'active' : '' ?>">
                     <a href="/shopping" class="svg-icon">
-                        <i class="ri-shopping-bag-line" style="font-size: 1.6em"></i>
+                        <i class="ri-shopping-cart-2-line" style="font-size: 1.6em"></i>
                         <span class="ml-4">Shopping</span>
                     </a>
                 </li>

@@ -43,14 +43,14 @@
                                             <div class="form-group mb-3">
                                                 <label for="exampleInputText01" class="h5">Quantity</label>
                                                 <input type="text" class="form-control" id="exampleInputText01"
-                                                    placeholder="20*">
+                                                    placeholder="Contoh: 20">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group mb-3">
                                                 <label for="exampleInputText01" class="h5">Leftover</label>
                                                 <input type="text" class="form-control" id="exampleInputText01"
-                                                    placeholder="2*">
+                                                    placeholder="Contoh: 2">
                                             </div>
                                         </div>
                                     </div>

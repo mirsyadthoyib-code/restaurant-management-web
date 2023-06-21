@@ -43,7 +43,7 @@
                                             <div class="form-group mb-3">
                                                 <label for="exampleInputText01" class="h5">Quantity</label>
                                                 <input type="text" class="form-control" id="exampleInputText01"
-                                                    placeholder="20*">
+                                                    placeholder="Contoh: 20">
                                             </div>
                                         </div>
                                     </div>

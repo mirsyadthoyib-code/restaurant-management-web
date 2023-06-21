@@ -40,4 +40,10 @@ class UserController extends Controller
             'title' => 'dashboard'
         ]);
     }
+
+    public function logout()
+    {
+        session()->flush();
+        return redirect()->route('login');
+    }
 }

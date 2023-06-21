@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use NumberFormatter;
 use App\Models\Belanja;
+use \App\Models\Bahan;
 use Illuminate\Http\Request;
 
 class BelanjaController extends Controller
@@ -25,11 +26,14 @@ class BelanjaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Bahan $bahan)
     {
         //
+        $bahan_name = $bahan->getBahanList();
+
         return view('shopping.form', [
-            'title' => 'shopping'
+            'title' => 'shopping',
+            'data' => $bahan_name,
         ]);
     }
 
@@ -39,9 +43,35 @@ class BelanjaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Belanja $belanja)
     {
         //
+        $request->validate([
+            'item' => 'required',
+            'price' => 'required|integer|min:500',
+            'qty' => 'required|integer|min:1',
+            'foto_invoice' => 'mimes:jpg,png',
+        ]);
+
+        $item = $request->input('item');
+        $price = $request->input('price');
+        $qty = $request->input('qty');
+        $foto_invoice = NULL;
+
+        if ($request->hasFile('foto_invoice')) {
+            // ...
+            $path = $request->file('foto_invoice')->store('public/shopping');
+        }
+
+        // echo json_encode(array(
+        //     'item' => $item,
+        //     'price' => $price,
+        //     'qty' => $qty,
+        //     'foto_invoice' => $path,
+        // ));
+        
+
+        return redirect('/shopping')->with('status', 'Success added shopping!');
     }
 
     /**
@@ -58,6 +88,12 @@ class BelanjaController extends Controller
 
         foreach ($data as $item) {
             $total += $item->kuantitas * $item->harga;
+            $item->action = '<a href="/shopping/edit?id='.$item->id_belanja_bahan.'" class="badge badge-primary">
+                                <i class="ri-edit-line" style="font-size: 1.6em"> </i>
+                             </a>
+                             <a href="/shopping/delete?id='.$item->id_belanja_bahan.'" class="badge badge-secondary">
+                                <i class="ri-delete-bin-line" style="font-size: 1.6em"> </i>
+                             </a>';
         }
 
         $fmt = numfmt_create( 'in_ID', NumberFormatter::CURRENCY );

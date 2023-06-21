@@ -18,28 +18,30 @@ use App\Http\Controllers\ProduksiController;
 */
 
 // Authentication Page
-Route::get('/login', [UserController::class, 'index'])->name('login');;
+Route::get('/', [UserController::class, 'index'])->name('login');
+Route::post('/dashboard', [UserController::class, 'login']);
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-// Dashboard
-Route::post('/', [UserController::class, 'login']);
-Route::get('/', function () {
-    // check login
-    if(!session('user')->nama_akun) {
-        return redirect()->route('login');
-    }
-    return view('dashboard', [
-        'title' => 'dashboard'
-    ]);
+Route::group(['middleware' => 'usersession'], function () {
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard', [
+            'title' => 'dashboard'
+        ]);
+    });
+
+    // Main Sidebar
+    Route::get('/shopping', [BelanjaController::class, 'show']);
+    Route::get('/production', [ProduksiController::class, 'show']);
+    Route::get('/selling', [JualController::class, 'show']);
+
+    // Create page
+    Route::get('/shopping/add', [BelanjaController::class, 'create'])->name('shopping');
+    Route::get('/production/add', [ProduksiController::class, 'create'])->name('production');
+    Route::get('/selling/add', [JualController::class, 'create'])->name('selling');
+
+    // Save api
+    Route::post('/shopping/save', [BelanjaController::class, 'store']);
+    Route::post('/production/save', [ProduksiController::class, 'store']);
+    Route::post('/selling/save', [JualController::class, 'store']);
 });
-
-// Main Sidebar
-Route::get('/shopping', [BelanjaController::class, 'show']);
-Route::get('/production', [ProduksiController::class, 'show']);
-Route::get('/selling', [JualController::class, 'show']);
-
-// Create page
-Route::get('/shopping/add', [BelanjaController::class, 'create']);
-Route::get('/production/add', [ProduksiController::class, 'create']);
-Route::get('/selling/add', [JualController::class, 'create']);
-
-

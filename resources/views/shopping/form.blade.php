@@ -9,7 +9,10 @@
                         <div class="card-header">
                             <div class="row justify-content-between">
                                 <div class="col-4 d-flex">
-                                    <h4 class="card-title">Input Shopping</h4>
+                                    <h4 class="card-title">Edit Invoice</h4>
+                                </div>
+                                <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="/shopping" role="button" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -18,46 +21,7 @@
                                 <form class="" action="/shopping/save" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-3">
-                                                <label for="item" class="h5">Item</label>
-                                                <select name="item" class="selectpicker form-control" data-style="py-0"
-                                                    id="item" onchange="readItem(this);">
-                                                    @foreach ($data as $item)
-                                                        <option value="{{ $item->nama_bahan }}">
-                                                            {{ ucwords($item->nama_bahan) . ' / ' . $item->satuan }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-3">
-                                                <label for="price" class="h5">Price</label>
-                                                <input type="text"
-                                                    class="form-control @error('price') is-invalid @enderror" id="price"
-                                                    name="price" placeholder="Example: 15000" value="{{ $current->price }}">
-                                                @error('price')
-                                                    <div class="alert alert-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <label for="qty" class="h5">Quantity</label>
-                                                <input type="text"
-                                                    class="form-control @error('qty') is-invalid @enderror" id="qty"
-                                                    name="qty" placeholder="Example: 2">
-                                                @error('qty')
-                                                    <div class="alert alert-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label for="foto_invoice" class="h5 col-lg-3">Invoice Photo</label>
+                                        <label for="foto_invoice" class="h5 col-lg-12">Invoice Photo</label>
                                     </div>
                                     <div class="form-group mb-4">
                                         <div class="custom-file">
@@ -72,14 +36,67 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-10">
-                                            <button type="submit" class="btn btn-primary">Add Data</button>
-                                            <a href="/shopping" role="button" class="btn btn-secondary">Cancel</a>
+                                            <button type="submit" class="btn btn-primary">Save Edit</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-body col-sm-4">
+                            <div class="card-body col-sm-3">
                                 <img id="preview" src="<?= url('images/image_placeholder.jpg') ?>" class="img-thumbnail">
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Table Section --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row justify-content-between">
+                                <div class="col-4 d-flex">
+                                    <h4 class="card-title">Shopping Detail</h4>
+                                </div>
+                                <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="/shopping/detail" role="button" class="btn btn-primary">Add Detail</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @if (session('status'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+                            <div class="table-responsive rounded bg-white">
+                                <table class="table mb-0 table-borderless tbl-server-info">
+                                    <thead>
+                                        <tr class="ligth">
+                                            <th scope="col"></th>
+                                            <th scope="col">Item</th>
+                                            <th scope="col">Qty</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($data as $key => $item)
+                                            <tr>
+                                                <th scope="row"><?= $key + 1 ?></th>
+                                                <td><?= ucwords($item->nama_bahan) ?></td>
+                                                <td><?= $item->kuantitas . ' ' . $item->satuan ?></td>
+                                                <td><?= $item->harga ?></td>
+                                                <td><?= $item->action ?></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                    <tfoot class="ligth">
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th>Total</th>
+                                            <th><?= $total ?></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>

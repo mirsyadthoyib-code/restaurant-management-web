@@ -4,63 +4,77 @@
     <div class="content-page">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="row justify-content-between">
-                                <div class="col-4 d-flex">
-                                    <h4 class="card-title">Shopping</h4>
-                                </div>
-                                <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="/shopping/add" role="button" class="btn btn-primary">Add Shopping Data</a>
-                                </div>
+
+                {{-- Modal --}}
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        {{-- Modal content --}}
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5>Invoice Photo</h5>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                            @endif
-                            <div class="table-responsive rounded bg-white">
-                                <table class="table mb-0 table-borderless tbl-server-info">
-                                    <thead>
-                                        <tr class="ligth">
-                                            <th scope="col"></th>
-                                            <th scope="col">Item</th>
-                                            <th scope="col">Qty</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $key => $item)
-                                            <tr>
-                                                <th scope="row"><?= $key + 1 ?></th>
-                                                <td><?= ucwords($item->nama_bahan) ?></td>
-                                                <td><?= $item->kuantitas . ' ' . $item->satuan ?></td>
-                                                <td><?= $item->harga ?></td>
-                                                <td><?= $item->action ?></td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot class="ligth">
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                            <th>Total</th>
-                                            <th><?= $total ?></th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                            <div class="modal-body">
+                                <form class="" action="/shopping/add" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group mb-4">
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                class="form-control custom-file-input @error('foto_invoice') is-invalid @enderror"
+                                                id="foto_invoice" name="foto_invoice" onchange="readURL(this);">
+                                            <label class="custom-file-label" for="foto_invoice">Choose Image</label>
+                                        </div>
+                                        @error('foto_invoice')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn-primary">Add Data</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {{-- Header Section --}}
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row justify-content-between">
+                                <div class="col-4 d-flex align-items-center">
+                                    <h4 class="card-title">Shopping</h4>
+                                </div>
+                                <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#myModal">Add Shopping Data</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Photo Card Section --}}
+                <div class="col-md-6 col-lg-3">
+                    <div class="card card-block card-stretch card-height">
+                        <a href="/shopping/edit" role="button" class="btn btn-link">
+                            <div class="card-body">
+                                <div class="top-block d-flex align-items-center justify-content-between">
+                                    <h5>Shopping 1</h5>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-1">
+                                    <img id="preview" src="<?= url('images/image_placeholder.jpg') ?>" 
+                                        class="img-thumbnail">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 @endSection

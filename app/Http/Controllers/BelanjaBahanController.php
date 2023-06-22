@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use NumberFormatter;
-use \App\Models\Bahan;
 use App\Models\Belanja;
+use \App\Models\Bahan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
-class BelanjaController extends Controller
+class BelanjaBahanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,42 +26,15 @@ class BelanjaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, Belanja $belanja)
+    public function create(Bahan $bahan)
     {
         //
-        $request->validate([
-            'foto_invoice' => 'required|mimes:jpg,png',
+        $bahan_name = $bahan->getBahanList();
+
+        return view('shopping_detail.form', [
+            'title' => 'shopping',
+            'data' => $bahan_name,
         ]);
-
-        $path = $request->file('foto_invoice')->store('public/shopping');
-
-        $belanja->insertBelanja($path, session('user')->id_akun);
-
-        // $contents = Storage::get($path);
-
-        // echo json_encode(array(
-        //     'foto_invoice' => $contents,
-        // ));
-
-        return redirect('/shopping')->with('status', 'Success added shopping!');
-    }
-
-    function compress($source, $destination, $quality) {
-
-        $info = getimagesize($source);
-    
-        if ($info['mime'] == 'image/jpeg') 
-            $image = imagecreatefromjpeg($source);
-    
-        elseif ($info['mime'] == 'image/gif') 
-            $image = imagecreatefromgif($source);
-    
-        elseif ($info['mime'] == 'image/png') 
-            $image = imagecreatefrompng($source);
-    
-        imagejpeg($image, $destination, $quality);
-    
-        return $destination;
     }
 
     /**

@@ -13,7 +13,7 @@ class User extends Model
     public function authentication($username, $password)
     {
         $data = DB::table('akun')
-            ->select('nama_akun', 'nama_gambar', 'role')
+            ->select('id_akun', 'nama_akun', 'nama_gambar', 'role')
             ->where('username', '=', $username)
             ->where('password', '=', $password)
             ->where('is_active', '=', 1)

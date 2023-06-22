@@ -18,7 +18,14 @@ class Belanja extends Model
             ->join('belanja', 'belanja_bahan.id_belanja', '=', 'belanja.id_belanja')
             ->join('bahan', 'belanja_bahan.id_bahan', '=', 'bahan.id_bahan')
             ->get();
-
         return $data;
+    }
+
+    public function insertBelanja($image_path, $account_id)
+    {
+        $id = DB::table('belanja')->insertGetId(
+            ['foto_invoice' => $image_path, 'id_akun' => $account_id]
+        );
+        return $id;
     }
 }

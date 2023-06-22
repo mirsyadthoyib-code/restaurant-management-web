@@ -5,6 +5,7 @@ use App\Http\Controllers\JualController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BelanjaController;
 use App\Http\Controllers\ProduksiController;
+use App\Http\Controllers\BelanjaBahanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,14 +32,20 @@ Route::group(['middleware' => 'usersession'], function () {
     });
 
     // Main Sidebar
-    Route::get('/shopping', [BelanjaController::class, 'show']);
+    Route::get('/shopping', [BelanjaController::class, 'show'])->name('shopping');;
     Route::get('/production', [ProduksiController::class, 'show']);
     Route::get('/selling', [JualController::class, 'show']);
 
-    // Create page
-    Route::get('/shopping/add', [BelanjaController::class, 'create'])->name('shopping');
+    // Add Main 
+    Route::post('/shopping/add', [BelanjaController::class, 'create'])->name('shopping_add');
     Route::get('/production/add', [ProduksiController::class, 'create'])->name('production');
     Route::get('/selling/add', [JualController::class, 'create'])->name('selling');
+
+    // Edit Main and List Detail
+    Route::get('/shopping/edit', [BelanjaController::class, 'edit'])->name('shopping_edit');
+
+    // Add & Edit Detail
+    Route::get('/shopping/detail', [BelanjaBahanController::class, 'create'])->name('shopping_detail_edit');
 
     // Save api
     Route::post('/shopping/save', [BelanjaController::class, 'store']);

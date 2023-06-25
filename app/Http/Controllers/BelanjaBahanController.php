@@ -3,37 +3,27 @@
 namespace App\Http\Controllers;
 
 use NumberFormatter;
-use App\Models\Belanja;
 use \App\Models\Bahan;
+use App\Models\Belanja;
+use App\Models\BelanjaBahan;
 use Illuminate\Http\Request;
 
 class BelanjaBahanController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('shopping.list', [
-            'title' => 'shopping'
-        ]);
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Bahan $bahan)
+    public function create($id, Bahan $bahan)
     {
         //
-        $bahan_name = $bahan->getBahanList();
+        $bahan_list = $bahan->getBahanList();
 
         return view('shopping_detail.form', [
             'title' => 'shopping',
-            'data' => $bahan_name,
+            'bahan' => $bahan_list,
+            'id' => $id
         ]);
     }
 
@@ -43,67 +33,29 @@ class BelanjaBahanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Belanja $belanja)
+    public function store($id, Request $request, BelanjaBahan $belanja_bahan)
     {
         //
         $request->validate([
             'item' => 'required',
             'price' => 'required|integer|min:500',
             'qty' => 'required|integer|min:1',
-            'foto_invoice' => 'mimes:jpg,png',
         ]);
 
         $item = $request->input('item');
-        $price = $request->input('price');
         $qty = $request->input('qty');
-        $foto_invoice = NULL;
+        $price = $request->input('price');
 
-        if ($request->hasFile('foto_invoice')) {
-            // ...
-            $path = $request->file('foto_invoice')->store('public/shopping');
-        }
+        $data =  array(
+            $id,
+            $item,
+            $qty,
+            $price
+        );
 
-        // echo json_encode(array(
-        //     'item' => $item,
-        //     'price' => $price,
-        //     'qty' => $qty,
-        //     'foto_invoice' => $path,
-        // ));
-        
+        $belanja_bahan->insertBelanjaBahan($data);
 
-        return redirect('/shopping')->with('status', 'Success added shopping!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Belanja  $belanja
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Belanja $belanja)
-    {
-        //
-        $data = $belanja->getBelanjaBahanList();
-        $total = 0;
-
-        foreach ($data as $item) {
-            $total += $item->kuantitas * $item->harga;
-            $item->action = '<a href="/shopping/edit?id='.$item->id_belanja_bahan.'" class="badge badge-primary">
-                                <i class="ri-edit-line" style="font-size: 1.6em"> </i>
-                             </a>
-                             <a href="/shopping/delete?id='.$item->id_belanja_bahan.'" class="badge badge-secondary">
-                                <i class="ri-delete-bin-line" style="font-size: 1.6em"> </i>
-                             </a>';
-        }
-
-        $fmt = numfmt_create( 'in_ID', NumberFormatter::CURRENCY );
-        $total = numfmt_format_currency($fmt, $total, "IDR")."\n";
-        
-        return view('shopping.list', [
-            'title' => 'shopping',
-            'data' => $data,
-            'total' => $total
-        ]);
+        return redirect('/shopping/edit/'.$id)->with('status', 'Success added shopping item!');
     }
 
     /**
@@ -112,29 +64,17 @@ class BelanjaBahanController extends Controller
      * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function edit(Belanja $belanja)
+    public function edit($id, Bahan $bahan, BelanjaBahan $belanja_bahan)
     {
         //
-        $data = $belanja->getBelanjaBahanList();
-        $total = 0;
+        $bahan_list = $bahan->getBahanList();
+        [$belanja_bahan_item] = $belanja_bahan->getBelanjaBahanById($id);
 
-        foreach ($data as $item) {
-            $total += $item->kuantitas * $item->harga;
-            $item->action = '<a href="/shopping/edit?id='.$item->id_belanja_bahan.'" class="badge badge-primary">
-                                <i class="ri-edit-line" style="font-size: 1.6em"> </i>
-                             </a>
-                             <a href="/shopping/delete?id='.$item->id_belanja_bahan.'" class="badge badge-secondary">
-                                <i class="ri-delete-bin-line" style="font-size: 1.6em"> </i>
-                             </a>';
-        }
-
-        $fmt = numfmt_create( 'in_ID', NumberFormatter::CURRENCY );
-        $total = numfmt_format_currency($fmt, $total, "IDR")."\n";
-        
-        return view('shopping.form', [
+        return view('shopping_detail.edit', [
             'title' => 'shopping',
-            'data' => $data,
-            'total' => $total
+            'bahan' => $bahan_list,
+            'belanja_bahan' => $belanja_bahan_item,
+            'id' => $id
         ]);
     }
 
@@ -145,9 +85,31 @@ class BelanjaBahanController extends Controller
      * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Belanja $belanja)
+    public function update($id, Request $request, BelanjaBahan $belanja_bahan)
     {
         //
+        $request->validate([
+            'item' => 'required',
+            'price' => 'required|integer|min:500',
+            'qty' => 'required|integer|min:1',
+        ]);
+
+        $item = $request->input('item');
+        $qty = $request->input('qty');
+        $price = $request->input('price');
+
+        [$belanja_bahan_item] = $belanja_bahan->getBelanjaBahanById($id);
+
+        $data =  array(
+            $id,
+            $item,
+            $qty,
+            $price
+        );
+
+        $belanja_bahan->updateBelanjaBahan($data);
+
+        return redirect('/shopping/edit/'.$belanja_bahan_item->id_belanja)->with('status', 'Success update shopping item!');
     }
 
     /**
@@ -156,8 +118,12 @@ class BelanjaBahanController extends Controller
      * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Belanja $belanja)
+    public function destroy(Request $request, BelanjaBahan $belanja_bahan)
     {
         //
+        $id = $request->input('id');
+        [$belanja_bahan_item] = $belanja_bahan->getBelanjaBahanById($id);
+        $belanja_bahan->deleteBelanjaBahan($id);
+        return redirect('/shopping/edit/'.$belanja_bahan_item->id_belanja)->with('status', 'Success delete shopping item!');
     }
 }

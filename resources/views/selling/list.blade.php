@@ -5,14 +5,71 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
+
+                    {{-- Success alert when status available --}}
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    {{-- Add Invoice Section --}}
                     <div class="card">
                         <div class="card-header">
                             <div class="row justify-content-between">
                                 <div class="col-4 d-flex">
-                                    <h4 class="card-title">Selling</h4>
+                                    <h4 class="card-title">Add Invoice</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid row">
+                            <div class="card-body col-sm-8">
+                                <form class="" action="/selling/update/{{ $jual->id_jual }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <label for="foto_invoice" class="h5 col-lg-12">Invoice Photo</label>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                class="form-control custom-file-input @error('foto_invoice') is-invalid @enderror"
+                                                id="foto_invoice" name="foto_invoice" onchange="readURL(this);">
+                                            <label class="custom-file-label" for="foto_invoice">Choose Image</label>
+                                        </div>
+                                        @error('foto_invoice')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-10">
+                                            <button type="submit" class="btn btn-primary">Save Invoice</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-body col-sm-3">
+                                @if (isset($jual->foto_invoice))
+                                    <img id="preview" src="{{ asset('storage/' . $jual->foto_invoice) }}"
+                                        class="img-thumbnail">
+                                @else
+                                    <img id="preview" src="{{ asset('storage/image_placeholder.jpg') }}"
+                                        class="img-thumbnail">
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Table Section --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row justify-content-between">
+                                <div class="col-4 d-flex">
+                                    <h4 class="card-title">Selling Items</h4>
                                 </div>
                                 <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="<?= url('/selling/add') ?>" role="button" class="btn btn-primary">Add Selling Data</a>
+                                    <a href="/selling/detail/add/{{ $jual->id_jual }}" role="button"
+                                        class="btn btn-primary">Add Item</a>
                                 </div>
                             </div>
                         </div>
@@ -30,14 +87,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $key => $item)
+                                        @foreach ($jual_menu as $key => $item)
                                             <tr>
                                                 <th scope="row"><?= $key + 1 ?></th>
                                                 <td><?= ucwords($item->nama_menu) ?></td>
                                                 <td><?= $item->kuantitas.' pcs' ?></td>
                                                 <td><?= $item->sisa.' pcs' ?></td>
-                                                <td><?= $item->harga_jual ?></td>
-                                                <td></td>
+                                                <td><?= $item->harga ?></td>
+                                                <td><?= $item->action ?></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -59,6 +116,16 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 @endSection

@@ -57,23 +57,26 @@
                     </div>
                 </div>
 
+
                 {{-- Photo Card Section --}}
-                <div class="col-md-6 col-lg-3">
-                    <div class="card card-block card-stretch card-height">
-                        <a href="/shopping/edit" role="button" class="btn btn-link">
-                            <div class="card-body">
-                                <div class="top-block d-flex align-items-center justify-content-between">
-                                    <h5>Shopping 1</h5>
+                @foreach ($belanja as $key => $item)
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-block card-stretch card-height">
+                            <a href="/shopping/edit/{{ $item->id_belanja }}" role="button" class="btn btn-link">
+                                <div class="card-body">
+                                    <div class="top-block d-flex align-items-center justify-content-between">
+                                        <h5>Invoice {{ $key + 1 }}</h5>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mt-1">
+                                        <img id="preview" src="{{ asset('storage/' . $item->foto_invoice) }}"
+                                            class="img-thumbnail">
+                                    </div>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-between mt-1">
-                                    <img id="preview" src="<?= url('images/image_placeholder.jpg') ?>" 
-                                        class="img-thumbnail">
-                                </div>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                
+                @endforeach
+
             </div>
         </div>
     </div>

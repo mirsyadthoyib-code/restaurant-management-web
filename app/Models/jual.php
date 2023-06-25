@@ -10,35 +10,28 @@ class Jual extends Model
 {
     use HasFactory;
 
-    public function getJualMenuList()
-    {
-        $data = DB::table('jual_menu')
-            ->select('jual_menu.*', 'jual.id_jual', 'menu.nama_menu')
-            ->join('jual', 'jual_menu.id_jual', '=', 'jual.id_jual')
-            ->join('menu', 'jual_menu.id_menu', '=', 'menu.id_menu')
-            ->get();
-
-        return $data;
-    }
-
-    public function addJual()
-    {
-
-        DB::table('jual')->insert([
-            'id_akun' => session('user')->id_akun
-        ]);
-    }
-
-    public function checkJualToday()
+    public function getJualToday()
     {
         $data = DB::table('jual')
-            ->select('nama_akun', 'nama_gambar', 'role')
-            ->where('is_active', '=', 1)
+            ->select('id_jual', 'foto_invoice')
+            ->where('created', 'LIKE', '%'.today()->format('Y-m-d').'%')
             ->get();
-        
-        if (count($data) == 0) {
-            return false;
-        }
         return $data;
+    }
+
+    public function insertJual($account_id)
+    {
+        $status = DB::table('jual')->insert(
+            ['foto_invoice' => null, 'id_akun' => $account_id]
+        );
+        return $status;
+    }
+
+    public function updateJual($id, $photo_path, $account_id)
+    {
+        $affected = DB::table('jual')
+        ->where('id_jual', $id)
+        ->update(['foto_invoice' => $photo_path, 'id_akun' => $account_id]);
+        return $affected;
     }
 }

@@ -5,64 +5,28 @@ namespace App\Http\Controllers;
 use NumberFormatter;
 use \App\Models\Bahan;
 use App\Models\Belanja;
+use App\Models\BelanjaBahan;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BelanjaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      *
+     * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('shopping.list', [
-            'title' => 'shopping'
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request, Belanja $belanja)
+    public function show(Belanja $belanja)
     {
         //
-        $request->validate([
-            'foto_invoice' => 'required|mimes:jpg,png',
+        $belanja_list = $belanja->getBelanjaList();
+        
+        return view('shopping.list', [
+            'title' => 'shopping',
+            'belanja' => $belanja_list
         ]);
-
-        $path = $request->file('foto_invoice')->store('public/shopping');
-
-        $belanja->insertBelanja($path, session('user')->id_akun);
-
-        // $contents = Storage::get($path);
-
-        // echo json_encode(array(
-        //     'foto_invoice' => $contents,
-        // ));
-
-        return redirect('/shopping')->with('status', 'Success added shopping!');
-    }
-
-    function compress($source, $destination, $quality) {
-
-        $info = getimagesize($source);
-    
-        if ($info['mime'] == 'image/jpeg') 
-            $image = imagecreatefromjpeg($source);
-    
-        elseif ($info['mime'] == 'image/gif') 
-            $image = imagecreatefromgif($source);
-    
-        elseif ($info['mime'] == 'image/png') 
-            $image = imagecreatefrompng($source);
-    
-        imagejpeg($image, $destination, $quality);
-    
-        return $destination;
     }
 
     /**
@@ -75,63 +39,14 @@ class BelanjaController extends Controller
     {
         //
         $request->validate([
-            'item' => 'required',
-            'price' => 'required|integer|min:500',
-            'qty' => 'required|integer|min:1',
-            'foto_invoice' => 'mimes:jpg,png',
+            'foto_invoice' => 'required|mimes:jpg,png',
         ]);
 
-        $item = $request->input('item');
-        $price = $request->input('price');
-        $qty = $request->input('qty');
-        $foto_invoice = NULL;
+        $path = $request->file('foto_invoice')->store('shopping','public');
 
-        if ($request->hasFile('foto_invoice')) {
-            // ...
-            $path = $request->file('foto_invoice')->store('public/shopping');
-        }
-
-        // echo json_encode(array(
-        //     'item' => $item,
-        //     'price' => $price,
-        //     'qty' => $qty,
-        //     'foto_invoice' => $path,
-        // ));
-        
+        $belanja->insertBelanja($path, session('user')->id_akun);
 
         return redirect('/shopping')->with('status', 'Success added shopping!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Belanja  $belanja
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Belanja $belanja)
-    {
-        //
-        $data = $belanja->getBelanjaBahanList();
-        $total = 0;
-
-        foreach ($data as $item) {
-            $total += $item->kuantitas * $item->harga;
-            $item->action = '<a href="/shopping/edit?id='.$item->id_belanja_bahan.'" class="badge badge-primary">
-                                <i class="ri-edit-line" style="font-size: 1.6em"> </i>
-                             </a>
-                             <a href="/shopping/delete?id='.$item->id_belanja_bahan.'" class="badge badge-secondary">
-                                <i class="ri-delete-bin-line" style="font-size: 1.6em"> </i>
-                             </a>';
-        }
-
-        $fmt = numfmt_create( 'in_ID', NumberFormatter::CURRENCY );
-        $total = numfmt_format_currency($fmt, $total, "IDR")."\n";
-        
-        return view('shopping.list', [
-            'title' => 'shopping',
-            'data' => $data,
-            'total' => $total
-        ]);
     }
 
     /**
@@ -140,20 +55,33 @@ class BelanjaController extends Controller
      * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function edit(Belanja $belanja)
+    public function edit($id, Request $request, Belanja $belanja, BelanjaBahan $belanja_bahan)
     {
         //
-        $data = $belanja->getBelanjaBahanList();
+        [$belanja] = $belanja->getBelanjaById($id);
+        $belanja_bahan_list = $belanja_bahan->getBelanjaBahanList($id);
         $total = 0;
 
-        foreach ($data as $item) {
+        foreach ($belanja_bahan_list as $item) {
             $total += $item->kuantitas * $item->harga;
-            $item->action = '<a href="/shopping/edit?id='.$item->id_belanja_bahan.'" class="badge badge-primary">
-                                <i class="ri-edit-line" style="font-size: 1.6em"> </i>
-                             </a>
-                             <a href="/shopping/delete?id='.$item->id_belanja_bahan.'" class="badge badge-secondary">
-                                <i class="ri-delete-bin-line" style="font-size: 1.6em"> </i>
-                             </a>';
+            $item->action = '
+            <form action="/shopping/detail/delete" method="POST" >
+                <a href="/shopping/detail/edit/'.$item->id_belanja_bahan.'" class="badge badge-primary">
+                <i class="ri-edit-line" style="font-size: 1.6em"> </i>
+                </a>
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="'.csrf_token().'">
+                <input type="hidden" name="id" value="'.$item->id_belanja_bahan.'">
+                <button type="submit" class="badge badge-secondary" style="border: none;" onclick="confirmation()"><i class="ri-delete-bin-line" style="font-size: 1.6em" ></i></button>
+            </form>
+            <script>
+            function confirmation(){
+                var result = confirm("Are you sure to delete?");
+                if(result){
+                    // Delete logic goes here
+                }
+            }
+            </script>';
         }
 
         $fmt = numfmt_create( 'in_ID', NumberFormatter::CURRENCY );
@@ -161,8 +89,10 @@ class BelanjaController extends Controller
         
         return view('shopping.form', [
             'title' => 'shopping',
-            'data' => $data,
-            'total' => $total
+            'belanja' => $belanja,
+            'belanja_bahan' => $belanja_bahan_list,
+            'total' => $total,
+            'id' => $id
         ]);
     }
 
@@ -173,9 +103,21 @@ class BelanjaController extends Controller
      * @param  \App\Models\Belanja  $belanja
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Belanja $belanja)
+    public function update($id, Request $request, Belanja $belanja)
     {
         //
+        $request->validate([
+            'foto_invoice' => 'required|mimes:jpg,png',
+        ]);
+
+        [$belanja_item] = $belanja->getBelanjaById($id);
+        Storage::disk('public')->delete($belanja_item->foto_invoice);
+
+        $path = $request->file('foto_invoice')->store('shopping','public');
+
+        $belanja->updateBelanja($id, $path, session('user')->id_akun);
+
+        return redirect('/shopping/edit/'.$id)->with('status', 'Success edited invoice!');
     }
 
     /**
@@ -187,5 +129,21 @@ class BelanjaController extends Controller
     public function destroy(Belanja $belanja)
     {
         //
+    }
+
+    private function compress($source, $destination, $quality)
+    {
+
+        $info = getimagesize($source);
+    
+        if ($info['mime'] == 'image/jpeg') 
+            $image = imagecreatefromjpeg($source);
+    
+        elseif ($info['mime'] == 'image/png') 
+            $image = imagecreatefrompng($source);
+    
+        imagejpeg($image, $destination, $quality);
+    
+        return $destination;
     }
 }

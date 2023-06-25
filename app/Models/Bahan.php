@@ -13,7 +13,7 @@ class Bahan extends Model
     public function getBahanList()
     {
         $data = DB::table('bahan')
-            ->select('nama_bahan', 'satuan', 'harga')
+            ->select('id_bahan', 'nama_bahan', 'satuan')
             ->orderBy('nama_bahan', 'asc')
             ->get();
 

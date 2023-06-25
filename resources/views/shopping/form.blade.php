@@ -5,6 +5,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
+
+                    {{-- Success alert when status available --}}
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    {{-- Edit Invoice Section --}}
                     <div class="card">
                         <div class="card-header">
                             <div class="row justify-content-between">
@@ -18,7 +27,8 @@
                         </div>
                         <div class="container-fluid row">
                             <div class="card-body col-sm-8">
-                                <form class="" action="/shopping/save" method="post" enctype="multipart/form-data">
+                                <form class="" action="/shopping/update/{{ $belanja->id_belanja }}" method="post"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <label for="foto_invoice" class="h5 col-lg-12">Invoice Photo</label>
@@ -42,7 +52,8 @@
                                 </form>
                             </div>
                             <div class="card-body col-sm-3">
-                                <img id="preview" src="<?= url('images/image_placeholder.jpg') ?>" class="img-thumbnail">
+                                <img id="preview" src="{{ asset('storage/' . $belanja->foto_invoice) }}"
+                                    class="img-thumbnail">
                             </div>
                         </div>
                     </div>
@@ -52,19 +63,14 @@
                         <div class="card-header">
                             <div class="row justify-content-between">
                                 <div class="col-4 d-flex">
-                                    <h4 class="card-title">Shopping Detail</h4>
+                                    <h4 class="card-title">Shopping Items</h4>
                                 </div>
                                 <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="/shopping/detail" role="button" class="btn btn-primary">Add Detail</a>
+                                    <a href="/shopping/detail/add/{{ $belanja->id_belanja }}" role="button" class="btn btn-primary">Add Item</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
                             <div class="table-responsive rounded bg-white">
                                 <table class="table mb-0 table-borderless tbl-server-info">
                                     <thead>
@@ -77,7 +83,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $key => $item)
+                                        @foreach ($belanja_bahan as $key => $item)
                                             <tr>
                                                 <th scope="row"><?= $key + 1 ?></th>
                                                 <td><?= ucwords($item->nama_bahan) ?></td>

@@ -13,8 +13,7 @@ class JualMenu extends Model
     public function getJualMenuList()
     {
         $data = DB::table('jual_menu')
-            ->select('jual_menu.*', 'jual.id_jual', 'menu.nama_menu')
-            ->join('jual', 'jual_menu.id_jual', '=', 'jual.id_jual')
+            ->select('jual_menu.*', 'id_jual', 'menu.nama_menu')
             ->join('menu', 'jual_menu.id_menu', '=', 'menu.id_menu')
             ->get();
 
@@ -27,6 +26,16 @@ class JualMenu extends Model
             ->select('id_jual_menu', 'jual_menu.id_menu', 'kuantitas', 'sisa', 'harga')
             ->join('menu', 'jual_menu.id_menu', '=', 'menu.id_menu')
             ->where('id_jual_menu', '=', $id)
+            ->get();
+        return $data;
+    }
+
+    public function getJualMenuByIdJual($id)
+    {
+        $data = DB::table('jual_menu')
+            ->select('id_jual_menu', 'id_jual', 'menu.nama_menu', 'kuantitas', 'sisa', 'harga')
+            ->join('menu', 'jual_menu.id_menu', '=', 'menu.id_menu')
+            ->where('id_jual', '=', $id)
             ->get();
         return $data;
     }

@@ -12,8 +12,7 @@
                                     <h4 class="card-title">Production</h4>
                                 </div>
                                 <div class="col-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="/production/add" role="button" class="btn btn-primary">Add Production
-                                        Data</a>
+                                    <a href="/production/detail/add/{{ $produksi->id_produksi }}" role="button" class="btn btn-primary">Add Item</a>
                                 </div>
                             </div>
                         </div>
@@ -30,13 +29,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $key => $item)
+                                        @foreach ($produksi_menu as $key => $item)
                                             <tr>
                                                 <th scope="row"><?= $key + 1 ?></th>
                                                 <td><?= ucwords($item->nama_menu) ?></td>
                                                 <td><?= $item->kuantitas.' pcs' ?></td>
-                                                <td><?= $item->harga_modal ?></td>
-                                                <td></td>
+                                                <td><?= $item->harga ?></td>
+                                                <td><?= $item->action ?></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -21,7 +21,7 @@ class BelanjaController extends Controller
     public function show(Belanja $belanja)
     {
         //
-        $belanja_list = $belanja->getBelanjaList();
+        $belanja_list = $belanja->getBelanjaToday();
         
         return view('shopping.list', [
             'title' => 'shopping',
@@ -72,14 +72,15 @@ class BelanjaController extends Controller
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="'.csrf_token().'">
                 <input type="hidden" name="id" value="'.$item->id_belanja_bahan.'">
-                <button type="submit" class="badge badge-secondary" style="border: none;" onclick="confirmation()"><i class="ri-delete-bin-line" style="font-size: 1.6em" ></i></button>
+                <button type="submit" class="badge badge-secondary" style="border: none;" onclick="return confirmation()"><i class="ri-delete-bin-line" style="font-size: 1.6em" ></i></button>
             </form>
             <script>
             function confirmation(){
                 var result = confirm("Are you sure to delete?");
-                if(result){
-                    // Delete logic goes here
+                if(!result){
+                    return false;
                 }
+                return true;
             }
             </script>';
         }

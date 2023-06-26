@@ -13,7 +13,7 @@ class Menu extends Model
     public function getMenuList()
     {
         $data = DB::table('menu')
-            ->select('id_menu', 'nama_menu', 'harga_jual as harga')
+            ->select('id_menu', 'nama_menu', 'harga_jual', 'harga_modal')
             ->where('is_active', '=', 1)
             ->orderBy('nama_menu', 'asc')
             ->get();
@@ -24,7 +24,7 @@ class Menu extends Model
     public function getMenuById($id)
     {
         $data = DB::table('menu')
-            ->select('id_menu', 'nama_menu', 'harga_jual as harga')
+            ->select('id_menu', 'nama_menu', 'harga_jual', 'harga_modal')
             ->where('id_menu', '=', $id, 'and')
             ->get();
 

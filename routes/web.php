@@ -7,6 +7,9 @@ use App\Http\Controllers\BelanjaController;
 use App\Http\Controllers\JualMenuController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\BelanjaBahanController;
+use App\Http\Controllers\ProduksiMenuController;
+use App\Models\Produksi;
+use GuzzleHttp\Handler\Proxy;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +41,7 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::get('/production', [ProduksiController::class, 'show']);
 
     // Add Main 
-    // In Modal
+        // In Modal
     Route::post('/shopping/add', [BelanjaController::class, 'store'])->name('shopping_add');
     Route::post('/selling/add', [JualController::class, 'store'])->name('selling_add');
 
@@ -52,20 +55,25 @@ Route::group(['middleware' => 'usersession'], function () {
     // Add Detail
     Route::get('/shopping/detail/add/{id}', [BelanjaBahanController::class, 'create'])->name('shopping_detail_add');
     Route::get('/selling/detail/add/{id}', [JualMenuController::class, 'create'])->name('selling_detail_add');
+    Route::get('/production/detail/add/{id}', [ProduksiMenuController::class, 'create'])->name('production_detail_add');
     
     // Save Detail Add
     Route::post('/shopping/detail/save/{id}', [BelanjaBahanController::class, 'store']);
     Route::post('/selling/detail/save/{id}', [JualMenuController::class, 'store']);
+    Route::post('/production/detail/save/{id}', [ProduksiMenuController::class, 'store']);
     
     // Edit Detail
     Route::get('/shopping/detail/edit/{id}', [BelanjaBahanController::class, 'edit']);
     Route::get('/selling/detail/edit/{id}', [JualMenuController::class, 'edit']);
+    Route::get('/production/detail/edit/{id}', [ProduksiMenuController::class, 'edit']);
     
     // Update Detail
     Route::post('/shopping/detail/update/{id}', [BelanjaBahanController::class, 'update']);
     Route::post('/selling/detail/update/{id}', [JualMenuController::class, 'update']);
+    Route::post('/production/detail/update/{id}', [ProduksiMenuController::class, 'update']);
     
     // Delete Detail
     Route::delete('/shopping/detail/delete', [BelanjaBahanController::class, 'destroy']);
     Route::delete('/selling/detail/delete', [JualMenuController::class, 'destroy']);
+    Route::delete('/production/detail/delete', [ProduksiMenuController::class, 'destroy']);
 });

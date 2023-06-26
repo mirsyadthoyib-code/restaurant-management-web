@@ -9,16 +9,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Produksi extends Model
 {
     use HasFactory;
-    protected $table = 'produksi_menu';
 
-    public function getProduksiMenuList()
+    public function getProduksiToday()
     {
-        $data = DB::table('produksi_menu')
-            ->select('produksi_menu.*', 'produksi.id_produksi', 'menu.nama_menu')
-            ->join('produksi', 'produksi_menu.id_produksi', '=', 'produksi.id_produksi')
-            ->join('menu', 'produksi_menu.id_menu', '=', 'menu.id_menu')
+        $data = DB::table('produksi')
+            ->select('id_produksi')
+            ->where('created', 'LIKE', '%'.today()->format('Y-m-d').'%')
             ->get();
-
         return $data;
+    }
+
+    public function insertProduksi($account_id)
+    {
+        $status = DB::table('produksi')->insert(
+            ['id_akun' => $account_id]
+        );
+        return $status;
     }
 }

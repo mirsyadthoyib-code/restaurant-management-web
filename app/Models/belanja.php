@@ -10,7 +10,7 @@ class Belanja extends Model
 {
     use HasFactory;
 
-    public function getBelanjaList()
+    public function getBelanjaToday()
     {
         $data = DB::table('belanja')
             ->select('id_belanja', 'foto_invoice')

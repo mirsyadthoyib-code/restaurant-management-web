@@ -14,36 +14,36 @@
                             </div>
                         </div>
                         <div class="container-fluid row">
-                            <div class="card-body col-sm-8">
-                                <form class="" action="/belanja/save" method="post" enctype="multipart/form-data">
+                            <div class="card-body col-sm-12">
+                                <form class="" action="/production/detail/update/{{ $id }}" method="post"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <label for="exampleInputText2" class="h5">Menu</label>
-                                                <select name="type" class="selectpicker form-control" data-style="py-0">
-                                                    <option>Risol Mayo</option>
-                                                    <option>Lontong Kentang</option>
-                                                    <option>Sosis Solo</option>
-                                                    <option>Martabak Telur</option>
-                                                    <option>Lumpur</option>
+                                                <label for="item" class="h5">Menu</label>
+                                                <select name="item" class="selectpicker form-control" data-style="py-0">
+                                                    @foreach ($menu as $item)
+                                                        <option value="{{ $item->id_menu }}"
+                                                            @if ($item->id_menu == $produksi_menu->id_menu) selected @endif>
+                                                            {{ ucwords($item->nama_menu) }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-3">
-                                                <label for="exampleInputText01" class="h5">COGS</label>
-                                                <input type="text" class="form-control" id="exampleInputText01"
-                                                    placeholder="Price" disabled>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <label for="exampleInputText01" class="h5">Quantity</label>
-                                                <input type="text" class="form-control" id="exampleInputText01"
-                                                    placeholder="Contoh: 20">
+                                                <label for="qty" class="h5">Quantity</label>
+                                                <input type="text"
+                                                    class="form-control @error('qty') is-invalid @enderror" id="qty"
+                                                    name="qty" placeholder="Example: 20"
+                                                    value="{{ $produksi_menu->kuantitas }}">
+                                                @error('qty')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>

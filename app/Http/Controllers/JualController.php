@@ -26,7 +26,7 @@ class JualController extends Controller
         [$jual_item] = $jual_item;
 
         // Get jual menu list
-        $jual_menu_list = $jual_menu->getJualMenuList();
+        $jual_menu_list = $jual_menu->getJualMenuByIdJual($jual_item->id_jual);
         $total_qty = 0;
         $total_lo = 0;
         $total = 0;
@@ -44,14 +44,15 @@ class JualController extends Controller
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="_token" value="'.csrf_token().'">
                 <input type="hidden" name="id" value="'.$item->id_jual_menu.'">
-                <button type="submit" class="badge badge-secondary" style="border: none;" onclick="confirmation()"><i class="ri-delete-bin-line" style="font-size: 1.6em" ></i></button>
+                <button type="submit" class="badge badge-secondary" style="border: none;" onclick="return confirmation()"><i class="ri-delete-bin-line" style="font-size: 1.6em" ></i></button>
             </form>
             <script>
             function confirmation(){
-                var result = confirm("Are you sure to delete?");
-                if(result){
-                    // Delete logic goes here
+                let result = confirm("Are you sure to delete?");
+                if(!result){
+                    return false;
                 }
+                return true;
             }
             </script>';
         }

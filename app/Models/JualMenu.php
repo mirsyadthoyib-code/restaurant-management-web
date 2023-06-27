@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,6 +37,19 @@ class JualMenu extends Model
             ->select('id_jual_menu', 'id_jual', 'menu.nama_menu', 'kuantitas', 'sisa', 'harga')
             ->join('menu', 'jual_menu.id_menu', '=', 'menu.id_menu')
             ->where('id_jual', '=', $id)
+            ->get();
+        return $data;
+    }
+
+    public function getTotalJualMenuPerMonth($month, $year)
+    {
+        $startDate = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-25');
+        $endDate = Carbon::createFromFormat('Y-m-d', $year.'-'.($month+1).'-24');
+        
+        $data = DB::table('jual_menu')
+            ->select(DB::raw('sum((kuantitas - sisa)*harga) as total'))
+            ->whereDate('created', '>=', $startDate)
+            ->whereDate('created', '<=', $endDate)
             ->get();
         return $data;
     }

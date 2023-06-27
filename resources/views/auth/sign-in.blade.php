@@ -39,7 +39,7 @@
                               <div class="p-3">
                                  <h2 class="mb-2 text-white">Sign In</h2>
                                  <p>Login to stay connected.</p>
-                                 <form method="POST" action="/dashboard">
+                                 <form method="POST" action="/">
                                     @csrf
                                     <div class="row">
                                        <div class="col-lg-12">

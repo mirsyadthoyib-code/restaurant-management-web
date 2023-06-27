@@ -36,9 +36,7 @@ class UserController extends Controller
 
         session(['user' => $user_data]);
 
-        return view('dashboard', [
-            'title' => 'dashboard'
-        ]);
+        return redirect()->route('dashboard');
     }
 
     public function logout()

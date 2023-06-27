@@ -7,6 +7,7 @@ use App\Http\Controllers\BelanjaController;
 use App\Http\Controllers\JualMenuController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\BelanjaBahanController;
+use App\Http\Controllers\DashboardsController;
 use App\Http\Controllers\ProduksiMenuController;
 use App\Models\Produksi;
 use GuzzleHttp\Handler\Proxy;
@@ -24,16 +25,12 @@ use GuzzleHttp\Handler\Proxy;
 
 // Authentication Page
 Route::get('/', [UserController::class, 'index'])->name('login');
-Route::post('/dashboard', [UserController::class, 'login']);
+Route::post('/', [UserController::class, 'login']);
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'usersession'], function () {
     // Dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard', [
-            'title' => 'dashboard'
-        ]);
-    });
+    Route::get('/dashboard', [DashboardsController::class, 'show'])->name('dashboard');
 
     // Main Sidebar
     Route::get('/shopping', [BelanjaController::class, 'show'])->name('shopping');;

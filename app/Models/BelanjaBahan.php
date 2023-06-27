@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +28,19 @@ class BelanjaBahan extends Model
             ->select('id_belanja', 'belanja_bahan.id_bahan', 'kuantitas', 'harga')
             ->join('bahan', 'belanja_bahan.id_bahan', '=', 'bahan.id_bahan')
             ->where('id_belanja_bahan', '=', $id)
+            ->get();
+        return $data;
+    }
+
+    public function getTotalBelanjaBahanPerMonth($month, $year)
+    {
+        $startDate = Carbon::createFromFormat('Y-m-d', $year.'-'.$month.'-25');
+        $endDate = Carbon::createFromFormat('Y-m-d', $year.'-'.($month+1).'-24');
+        
+        $data = DB::table('belanja_bahan')
+            ->select(DB::raw('sum(kuantitas*harga) as total'))
+            ->whereDate('created', '>=', $startDate)
+            ->whereDate('created', '<=', $endDate)
             ->get();
         return $data;
     }

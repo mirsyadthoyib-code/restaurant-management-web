@@ -38,8 +38,8 @@ class BelanjaBahanController extends Controller
         //
         $request->validate([
             'item' => 'required',
-            'price' => 'required|integer|min:500',
-            'qty' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:500',
+            'qty' => 'required|numeric|min:0.5',
         ]);
 
         $item = $request->input('item');
@@ -90,8 +90,8 @@ class BelanjaBahanController extends Controller
         //
         $request->validate([
             'item' => 'required',
-            'price' => 'required|integer|min:500',
-            'qty' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:500',
+            'qty' => 'required|numeric|min:0.5',
         ]);
 
         $item = $request->input('item');

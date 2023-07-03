@@ -17,10 +17,10 @@ class UserController extends Controller
 
     public function login(Request $request, User $user)
     {
-        if (!$request->has(['username', 'password'])) {
-            // ...
-            return redirect()->route('login');
-        }
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
 
         $username = $request->input('username');
         $password = $request->input('password');

@@ -33,7 +33,7 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::get('/dashboard', [DashboardsController::class, 'show'])->name('dashboard');
 
     // Main Sidebar
-    Route::get('/shopping', [BelanjaController::class, 'show'])->name('shopping');;
+    Route::get('/firstStock', [BelanjaController::class, 'show'])->name('shopping');
     Route::get('/selling', [JualController::class, 'show']);
     Route::get('/production', [ProduksiController::class, 'show']);
 

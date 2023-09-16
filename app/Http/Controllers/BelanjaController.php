@@ -24,7 +24,7 @@ class BelanjaController extends Controller
         $belanja_list = $belanja->getBelanjaToday();
         
         return view('shopping.list', [
-            'title' => 'shopping',
+            'title' => 'Stok Awal',
             'belanja' => $belanja_list
         ]);
     }

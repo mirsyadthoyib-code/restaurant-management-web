@@ -29,7 +29,10 @@
                                 <h5>Sales</h5>
                                 <span class="badge badge-warning">Monthly</span>
                             </div>
-                            <h3>Rp<span class="counter"><?= $total_selling ?></span></h3>
+                            <h3>Rp<span class="counter">
+                                {{-- <?= $total_selling ?> --}}
+                                150000000
+                            </span></h3>
                             <div class="d-flex align-items-center justify-content-between mt-1">
                                 <p class="mb-0">Total Revenue</p>
                                 <span class="text-warning">35%</span>
@@ -47,7 +50,10 @@
                                 <h5>Cost</h5>
                                 <span class="badge badge-success">Monthly</span>
                             </div>
-                            <h3>Rp<span class="counter"><?= $total_shopping ?></span></h3>
+                            <h3>Rp<span class="counter">
+                                {{-- <?= $total_shopping ?> --}}
+                                100000000
+                            </span></h3>
                             <div class="d-flex align-items-center justify-content-between mt-1">
                                 <p class="mb-0">Total Expenses</p>
                                 <span class="text-success">85%</span>
@@ -65,7 +71,10 @@
                                 <h5>Profit</h5>
                                 <span class="badge badge-info">Monthly</span>
                             </div>
-                            <h3>Rp<span class="counter"><?= $total_profit ?></span></h3>
+                            <h3>Rp<span class="counter">
+                                {{-- <?= $total_profit ?> --}}
+                                50000000
+                            </span></h3>
                             <div class="d-flex align-items-center justify-content-between mt-1">
                                 <p class="mb-0">Total Profit</p>
                                 <span class="text-info">55%</span>

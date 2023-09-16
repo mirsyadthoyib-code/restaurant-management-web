@@ -11,7 +11,7 @@
                         {{-- Modal content --}}
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5>Invoice Photo</h5>
+                                <h5>Stok Awal</h5>
                             </div>
                             <div class="modal-body">
                                 <form class="" action="/shopping/add" method="post" enctype="multipart/form-data">
